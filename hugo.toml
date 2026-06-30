@@ -1,0 +1,36 @@
+baseURL = "https://go-ruby-scanf.github.io/"
+title = "go-ruby-scanf"
+disableKinds = ["taxonomy", "term", "RSS", "sitemap", "404"]
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[[params.phases]]
+  name = "Integer directives"
+  status = "ready"
+  blurb = "`%d` / `%u` signed decimal, `%i` with base detection (`0x`=hex, leading `0`=octal), `%x` / `%X` hex and `%o` octal — values widening transparently to arbitrary-precision `*big.Int` the moment they overflow `int`, just like Ruby's `Integer`."
+
+[[params.phases]]
+  name = "Float directives"
+  status = "ready"
+  blurb = "`%a` / `%e` / `%f` / `%g` and their uppercase forms, including hexadecimal floats (`0x1.8p1`), MRI's `123.e+3` form, and `±Infinity` saturation on overflow — matching MRI's quirky float grammar byte-for-byte."
+
+[[params.phases]]
+  name = "Strings, chars & sets"
+  status = "ready"
+  blurb = "`%s` (a run of non-whitespace), `%c` (a single character or *n* with a width, which does **not** skip leading whitespace), and character-class sets `%[…]` / `%[^…]` with ranges, POSIX named classes (`%[[:alpha:]]`), and width bounds."
+
+[[params.phases]]
+  name = "Widths & suppression"
+  status = "ready"
+  blurb = "A decimal field width on any directive (`%3d`, `%5s`, `%4f`), and the assignment-suppression `*` flag (`%*d`) that consumes input but emits no value; `%%` matches a literal `%`."
+
+[[params.phases]]
+  name = "MRI stopping semantics"
+  status = "ready"
+  blurb = "Scanning stops at the first non-match, at end of input, or when the format is exhausted, returning the values converted so far — a partial match yields a shorter slice, no match an empty one. `Scan` runs once; `ScanAll` repeats the format until input is exhausted."
+
+[[params.phases]]
+  name = "Differential oracle & coverage"
+  status = "ready"
+  blurb = "A wide corpus — every directive, width, set, suppression flag, literal, and partial/failed match, in both single and block forms — scanned here and by the system `ruby` (`String#scanf`) and compared `#inspect`-for-`#inspect`; 100% coverage, gofmt + go vet clean, green across all six 64-bit Go arches."
